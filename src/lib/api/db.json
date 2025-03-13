@@ -1,0 +1,109 @@
+{
+	"products": [
+		{
+			"brand": "FlyHugz®",
+			"imgs": [
+				"https://flyhugz.com/cdn/shop/files/FREETravelBag_auto_x2_3dd9b084-8495-42e6-810e-d5c810ee907b.jpg?v=1698915363"
+			],
+			"name": "Travel Neck Pillow",
+			"rating": 5,
+			"reviews": 18640,
+			"price": 39.0,
+			"original_price": 78.0,
+			"description": "Don't know how I ever flew without this."
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": ["https://flyhugz.com/cdn/shop/files/FREETravelBag_34.jpg?v=1713704758"],
+			"name": "Premium Sleep Mask",
+			"rating": 5,
+			"reviews": 17680,
+			"price": 19.9,
+			"original_price": 39.8,
+			"description": "I've never slept better during my travels."
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": ["https://flyhugz.com/cdn/shop/files/FREETravelBag_37.jpg?v=1717000529"],
+			"name": "Princess Neck Pillow",
+			"rating": 5,
+			"reviews": 18640,
+			"price": 39.0,
+			"original_price": 78.0,
+			"description": "Fall into a deep sleep with beautiful style."
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": ["https://flyhugz.com/cdn/shop/files/FREETravelBag_49.jpg?v=1718112293"],
+			"name": "Princess Sleep Mask",
+			"rating": 5,
+			"reviews": 17680,
+			"price": 19.9,
+			"original_price": 39.8,
+			"description": "Perfect for my lashes, I fall asleep so fast!"
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": [
+				"https://flyhugz.com/cdn/shop/files/FlyHugzSiteDesigns_7_dde6d384-c3c9-4adc-9ca3-28b7130539ae.jpg?v=1721740070"
+			],
+			"name": "Anti Theft Travel Bag",
+			"rating": 5,
+			"reviews": 21450,
+			"price": 39.0,
+			"original_price": 78.0,
+			"description": "Finally, I have no travel stress anymore."
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": [
+				"https://flyhugz.com/cdn/shop/files/FlyHugzSiteDesigns_8_70f2e004-4df8-4d8e-afa5-b977e1fa29a5.jpg?v=1721740053"
+			],
+			"name": "Anti Theft Princess Bag",
+			"rating": 5,
+			"reviews": 21450,
+			"price": 39.0,
+			"original_price": 78.0,
+			"description": "Enjoy traveling with complete protection."
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": [
+				"https://flyhugz.com/cdn/shop/files/04ce9692fcc84ce0b275657dd4e5ff74.jpg?v=1706542722"
+			],
+			"name": "Noise Reducing EarPlugs",
+			"rating": 5,
+			"reviews": 19360,
+			"price": 19.9,
+			"original_price": 39.8,
+			"description": "Enjoy sleeping without annoying noises."
+		},
+		{
+			"brand": "FlyHugz®",
+			"imgs": ["https://flyhugz.com/cdn/shop/files/FREETravelBag_64.jpg?v=1719519330"],
+			"name": "Blanket & Comfort Bag",
+			"rating": 5,
+			"reviews": 11860,
+			"price": 39.0,
+			"original_price": 78.0,
+			"description": "So comfortable and warm with great storage."
+		}
+	],
+	"slides": [
+		{
+			"url_video": "https://cdn.shopify.com/videos/c/o/v/857e507d43d649d78a0e451ec05bbcad.mp4"
+		},
+		{
+			"url_video": "https://cdn.shopify.com/videos/c/o/v/36da969e786143799fe49df40151d409.mp4"
+		},
+		{
+			"url_video": "https://cdn.shopify.com/videos/c/o/v/e26ed21f6ff84fa8b8e739b59f26dc5d.mp4"
+		},
+		{
+			"url_video": "https://cdn.shopify.com/videos/c/o/v/fb5e24f633864c8683af782bfecf7ea6.mov"
+		},
+		{
+			"url_video": "https://cdn.shopify.com/videos/c/o/v/c027d04bf88b4ec78b668ee1a23945d8.mp4"
+		}
+	]
+}

@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import 'tailwindcss';
+
+@theme {
+	--color-button-background: #2d3436;
+	--color-primary: #121212;
+	--color-title: #2d3436;
+	--color-border-main: #e8e8e8;
+	--color-strong: #ff6b6b;
+
+	/* Break Point */
+	--breakpoint-header: 800px;
+	--breakpoint-footer: 750px;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+button {
+	cursor: pointer;
+}
+
+.container-page {
+	padding-inline: 3rem;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+@media (max-width: 950px) {
+	.container-page {
+		padding-inline: 2rem;
+	}
+}
+
+@media (max-width: 550px) {
+	.container-page {
+		padding-inline: 1rem;
+	}
+}
