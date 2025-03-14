@@ -7,4 +7,5 @@ export interface IProduct {
 	original_price: number;
 	description: string;
 	brand: string;
+	id: string;
 }

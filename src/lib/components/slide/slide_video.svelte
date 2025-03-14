@@ -35,7 +35,7 @@
       on:click={handlePlay}
       class="duration-400 absolute left-[50%] top-[50%] flex size-[30px] translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-[#b9b9b99e] transition-all md:size-[60px]"
     >
-      <PlayIcon class="md:max-[15px] max-w-[10px] fill-white text-white" />
+      <PlayIcon class="size-[20px] fill-white text-white md:size-[24px]" />
     </button>
   {/if}
 </div>
