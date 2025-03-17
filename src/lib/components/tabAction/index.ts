@@ -1,0 +1,1 @@
+export {default as TabAction} from "./tabAction.svelte"

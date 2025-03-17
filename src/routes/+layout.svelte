@@ -7,6 +7,8 @@
 
 <main>
 	<Header />
-	{@render children()}
+	<div class="mt-[120px]">
+		{@render children()}
+	</div>
 	<Footer />
 </main>

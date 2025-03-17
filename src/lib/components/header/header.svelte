@@ -111,7 +111,7 @@
   });
 </script>
 
-<header class="fixed top-0 right-0 left-0 z-50 bg-white">
+<header class="fixed top-0 right-0 left-0 z-[998] bg-white">
   <div class="bg-button-background">
     <div class="container-page flex size-full items-center justify-center">
       <div class="mx-auto py-2.5 text-center">
@@ -166,7 +166,7 @@
                       class="border-primary/10 absolute top-[65px] right-0 flex w-max items-start justify-start border"
                     >
                       {#each route.subItem as subItem}
-                        <a class="px-3 py-2" href={subItem.href}>{subItem.title}</a>
+                        <a class="px-3 py-2 bg-white" href={subItem.href}>{subItem.title}</a>
                       {/each}
                     </div>
                   {/if}

@@ -39,6 +39,7 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"store-th-eme": "file:"
+		"store-th-eme": "file:",
+		"swiper": "^11.2.5"
 	}
 }

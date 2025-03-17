@@ -1,7 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { MinusIcon, PlusIcon } from 'lucide-svelte';
+  import Arcodion from '$lib/components/arcodion/arcodion.svelte';
+  import { TabAction } from '$lib/components/tabAction/index.js';
+  import Shopify from '$lib/components/shopify/shopify.svelte';
+  import Compare from '$lib/components/compare/compare.svelte';
+  import Future from '$lib/components/future/future.svelte';
+  import LastContent from '$lib/components/lastContent/lastContent.svelte';
+  import Report from '$lib/components/report/report.svelte';
   let { data } = $props();
-
   let productDetail = data.data;
   interface Image {
     src: string;
@@ -24,9 +31,6 @@
   let currentIndex = 0;
   let imageContainer: HTMLDivElement;
   let thumbnails: HTMLDivElement;
-  let lightBox: HTMLDivElement;
-  let lightBoxMainImg: HTMLImageElement;
-  let isLightBoxOpen = false;
   let mainImages: HTMLImageElement[] = [];
   let imgThumbnails: HTMLImageElement[] = [];
   let containerSliderOffset = 0;
@@ -47,13 +51,6 @@
       (imgThumbnails[index]?.clientWidth || 0) / 2;
 
     thumbnails?.scrollTo({ left: leftSpacing, behavior: 'smooth' });
-  }
-
-  function updateLightBoxImage(index: number): void {
-    if (lightBoxMainImg) {
-      const imgSrc = images[index]?.src || '';
-      lightBoxMainImg.src = imgSrc;
-    }
   }
 
   function handleMainImageClick(event: MouseEvent, index: number) {
@@ -78,28 +75,6 @@
     target.classList.add(mouseX < width / 2 ? 'left-cursor' : 'right-cursor');
   }
 
-  function openLightBox() {
-    updateLightBoxImage(currentIndex);
-    isLightBoxOpen = true;
-  }
-
-  function closeLightBox() {
-    isLightBoxOpen = false;
-  }
-  function previousImage() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateLightBoxImage(currentIndex);
-    }
-  }
-
-  function nextImage() {
-    if (currentIndex < images.length - 1) {
-      currentIndex++;
-      updateLightBoxImage(currentIndex);
-    }
-  }
-
   function handleThumbnailClick(index: number) {
     currentIndex = index;
     updateSlider(currentIndex);
@@ -115,8 +90,6 @@
     currentIndex = 0;
     updateSlider(currentIndex);
   });
-
-  let arr: string[] = $state(Array(productDetail.options.length));
   let currentVariant = $state(null);
   let currentPrice = $state(productDetail.price);
   let selectedOptions = $state([]);
@@ -222,16 +195,27 @@
       window.updateCart();
     }
   }
+
+  
 </script>
 
-<div class="container-page product-container !mt-[140px]">
+<div class="wrapper-notifacion mb-6">
+  <section class="notifacion">
+    <div>
+      <img loading="lazy" src="https://bleame.vercel.app/assets/images/truck-icon.png" alt="" />
+      <p>Free Shipping Today</p>
+    </div>
+    <div>
+      <img loading="lazy" src="https://bleame.vercel.app/assets/images/hearth-icon.png" alt="" />
+      <p>175,000+ Happy Babes</p>
+    </div>
+  </section>
+</div>
+<div class="container-page product-container">
   <section class="product-detail">
     <div class="product-media">
       <div class="container-slide">
         <div class="slider" id="slider">
-          <div class="btn-zoom" on:click={openLightBox}>
-            <img src="https://bleame.vercel.app/assets/images/loupe.png" alt="" />
-          </div>
           <div class="image-container" bind:this={imageContainer}>
             {#each images as image, i}
               <img
@@ -280,10 +264,25 @@
               <span class="compare-price">${productDetail.compare_at_price}</span>
             {/if}
             <span class="price">${currentPrice}</span>
-            <!-- <span>${productDetail.price}</span> -->
           </div>
           <div class="meta">
-            <span>SAVE 48%</span>
+            {#if currentVariant?.compare_at_price > currentVariant?.price}
+              <span
+                >SAVE {Math.round(
+                  ((currentVariant.compare_at_price - currentVariant.price) /
+                    currentVariant.compare_at_price) *
+                    100
+                )}%</span
+              >
+            {:else if productDetail.compare_at_price > currentPrice}
+              <span
+                >SAVE {Math.round(
+                  ((productDetail.compare_at_price - currentPrice) /
+                    productDetail.compare_at_price) *
+                    100
+                )}%</span
+              >
+            {/if}
           </div>
         </div>
       </div>
@@ -302,42 +301,49 @@
           <div>✨ Pain-free, safe & gentle</div>
           <div>😌 Gently exfoliates dead skin cell</div>
         </div>
-        <div class="block-swatch-list">
+        <div class="block-swatch-list !flex">
           {#each productDetail.options as option, idx}
-            <div class="product-option-container">
-              <label class="product-option">
-                <div class="radio-btn"></div>
-                <div class="product-image">
-                  <img
-                    src="https://cdn.shopify.com/s/files/1/0609/1531/8959/files/pack1.png?v=1713997682"
-                    alt="Product Image"
-                  />
-                </div>
-                <div class="product-title">{option.name}</div>
-              </label>
-
-              <div class="relative mt-2">
-                <select
-                  bind:value={selectedOptions[idx]}
-                  on:change={() => handleOptionChange(idx, selectedOptions[idx])}
-                  class="w-full appearance-none rounded-md border border-gray-300 bg-[#f5f2ff] px-4 py-2 pr-8 leading-tight text-gray-700 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                >
-                  {#each option.values as value}
-                    <option value={value.id}>{value.value}</option>
-                  {/each}
-                </select>
-                <div
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-                >
-                  <svg
-                    class="h-4 w-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
+            <div class="group relative">
+              <select
+                bind:value={selectedOptions[idx]}
+                on:change={() => handleOptionChange(idx, selectedOptions[idx])}
+                class="w-56 appearance-none rounded-md bg-gradient-to-r from-[#a99dda] to-[#8577bc] px-4 py-1 text-lg font-medium text-white shadow-lg outline-none ring-1 ring-[#a99dda] transition-all duration-200 hover:shadow-xl focus:ring-2 focus:ring-[#8577bc7b]"
+                style="
+                  /* Custom styling for dropdown */
+                  background-image: linear-gradient(to right, #a99dda, #b5aae0);
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
+                "
+              >
+                {#each option.values as value}
+                  <option
+                    class="text-primary bg-white px-2 py-3 text-xs font-bold capitalize"
+                    value={value.id}
+                    style="
+                      /* Custom styling for options */
+                      background-color: #ffffff;
+                      color: #444;
+                      font-weight: 600;
+                      padding: 12px 16px;
+                      border-bottom: 1px solid #f0f0f0;
+                      transition: background-color 0.2s ease;
+                      text-transform: capitalize;
+                      letter-spacing: 0.5px;
+                    "
                   >
-                    <path
-                      d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                    />
-                  </svg>
+                    {value.value}
+                  </option>
+                {/each}
+              </select>
+              <div
+                class="pointer-events-none absolute right-0 top-0 h-full w-12 translate-x-0 rounded-r-md bg-[#a99dda] bg-opacity-70 transition-all duration-300 group-hover:bg-opacity-100"
+              >
+                <div class="flex h-full w-full items-center justify-center">
+                  <PlusIcon
+                    color="#fff"
+                    size={20}
+                    class="transition-transform duration-300 group-hover:scale-110"
+                  />
                 </div>
               </div>
             </div>
@@ -399,96 +405,102 @@
         </div>
         <hr />
       </div>
-      <div class="arcodion">
-        <div class="arcodion-item">
-          <div class="title">
-            <h1>Where can I use Bleame?</h1>
-            <div class="plus">
-              <img loading="lazy" src="https://bleame.vercel.app//assets/images/plus.png" alt="" />
-            </div>
-          </div>
-          <div class="promt">
-            You can use your Bleame on just about any part of your body below the cheeks, including
-            the bikini area and face! Its completely safe to use!
-          </div>
-        </div>
-        <div class="arcodion-item">
-          <div class="title">
-            <h1>How does it work?</h1>
-            <div class="plus">
-              <img loading="lazy" src="https://bleame.vercel.app//assets/images/plus.png" alt="" />
-            </div>
-          </div>
-          <div class="promt">
-            Using Nano-Crystalline technology, Bleame™ Crystal Hair Eraser allows the hair to clump
-            and break from the surface when rubbed gently on the skin. This process also helps
-            exfoliate, revealing baby smooth skin after use 💜
-          </div>
-        </div>
-        <div class="arcodion-item">
-          <div class="title">
-            <h1>Does it help against strawberry skin & bumps?</h1>
-            <div class="plus">
-              <img loading="lazy" src="https://bleame.vercel.app//assets/images/plus.png" alt="" />
-            </div>
-          </div>
-          <div class="promt">
-            Absolutely! Bleame effectively improves the appearance of strawberry skin and razor
-            bumps, which are commonly caused by waxing and shaving.
-          </div>
-        </div>
-        <div class="arcodion-item">
-          <div class="title">
-            <h1>Shipping & Delivery</h1>
-            <div class="plus">
-              <img loading="lazy" src="https://bleame.vercel.app//assets/images/plus.png" alt="" />
-            </div>
-          </div>
-          <div class="promt">
-            Shipping Information: We process orders within 1-2 business days from our US warehouse.
-            After dispatch, the estimated delivery time varies based on the shipping method you
-            choose, generally taking up to 2 days.
-          </div>
-        </div>
-        <div class="arcodion-item">
-          <div class="title">
-            <h1>Return & Refund Policy</h1>
-            <div class="plus">
-              <img loading="lazy" src="https://bleame.vercel.app//assets/images/plus.png" alt="" />
-            </div>
-          </div>
-          <div class="promt">
-            Our commitment to your satisfaction is evident in our products, backed by a 30-Day 100%
-            Money Back Guarantee. We are pleased to inform you that we even include a refund for
-            shipping charges. If, after this initial period, you find yourself not fully satisfied,
-            we will initiate a refund for the entire amount you paid. For returns, please email us
-            at hello@bleame.com
-          </div>
-        </div>
-      </div>
+      <Arcodion />
     </div>
   </section>
-</div>
-<div
-  class="lightBox {isLightBoxOpen ? 'openLightBox' : ''}"
-  bind:this={lightBox}
-  on:click|self={closeLightBox}
->
-  <div class="wrapper-lighBox">
-    <div class="btn-lightBox btn-left" on:click|stopPropagation={previousImage}>
-      <img src="https://bleame.vercel.app/assets/images/back-16px.png" alt="Previous" />
-    </div>
-    <div class="lightBox-main-img" on:click|stopPropagation>
-      <img bind:this={lightBoxMainImg} src={images[0]?.src || ''} alt="Lightbox Image" />
-    </div>
-    <div class="btn-lightBox btn-right" on:click|stopPropagation={nextImage}>
-      <img src="https://bleame.vercel.app/assets/images/next-16px.png" alt="Next" />
-    </div>
-    <div class="close-lightBox" on:click|stopPropagation={closeLightBox}>
-      <img src="https://bleame.vercel.app/assets/images/close.png" alt="Close" />
-    </div>
-  </div>
+  <Shopify />
+  <TabAction />
+  <Compare />
+  <Future />
+  <LastContent />
+  <Report />
 </div>
 
+
 <style>
+  /* Global styles for improving select options appearance */
+  select option:hover,
+  select option:focus,
+  select option:active,
+  select option:checked {
+    background: linear-gradient(to right, #f3f0ff, #e9e2ff) !important;
+    color: #6143b9 !important;
+    font-weight: 700 !important;
+  }
+
+  select:focus {
+    border-color: #9a8bd0;
+  }
+
+  /* This makes the scrollbar in the dropdown prettier */
+  select {
+    scrollbar-width: thin;
+    scrollbar-color: #a99dda #f3f0ff;
+  }
+
+  select::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  select::-webkit-scrollbar-track {
+    background: #f3f0ff;
+  }
+
+  select::-webkit-scrollbar-thumb {
+    background-color: #a99dda;
+    border-radius: 20px;
+    border: 2px solid #f3f0ff;
+  }
+
+  :global(.main-image.left-cursor) {
+    cursor: url('https://bleame.vercel.app/assets/images/back-16px.png'), auto;
+  }
+
+  :global(.main-image.right-cursor) {
+    cursor: url('https://bleame.vercel.app/assets/images/next-16px.png'), auto;
+  }
+
+
+  /* Shopify */
+  .wrapper-notifacion {
+  height: 43px;
+  background-color: #2e2a39;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notifacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  width: max-content;
+}
+
+.notifacion div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.notifacion div img {
+  width: 20px;
+  height: 20px;
+}
+
+.notifacion div p {
+  color: white;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  text-wrap-mode: nowrap;
+}
+
+/* Shopify */
+
+
 </style>

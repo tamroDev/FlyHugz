@@ -1,0 +1,1 @@
+export {default as LastContent} from "./lastContent.svelte"

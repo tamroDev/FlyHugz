@@ -1,0 +1,1 @@
+export { default as Arcodion} from "./arcodion.svelte"

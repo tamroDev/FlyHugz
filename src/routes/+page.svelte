@@ -6,16 +6,7 @@
   // import type { IProduct } from '$lib/schemes/product.type';
   // import type { ISlide } from '$lib/schemes/slide.type';
   import { ChevronRightIcon, ChevronLeftIcon, StarIcon } from 'lucide-svelte';
-  // import type { IReview } from '$lib/schemes/review.type';
-
-  // let { data } = $props<{
-  //   data: {},
-  //   products: IProduct[];
-  //   slides: ISlide[];
-  //   reviews: IReview[];
-  //   error?: string;
-  // }>();
-
+  import { SlideVideo } from '$lib/components/slide';
   let container: HTMLDivElement;
   let scrollX = $state(0);
   let speed = 0.5;
@@ -58,16 +49,200 @@
     'https://cdn.shopify.com/s/files/1/0749/0053/7654/t/2/assets/futurism_240x240-2-1680809936179.avif?v=1680809938'
   ];
 
-  let {data}=$props();
+  let { data } = $props();
+
+  const videoUrls = [
+    'https://cdn.shopify.com/videos/c/o/v/857e507d43d649d78a0e451ec05bbcad.mp4',
+    'https://cdn.shopify.com/videos/c/o/v/36da969e786143799fe49df40151d409.mp4',
+    'https://cdn.shopify.com/videos/c/o/v/e26ed21f6ff84fa8b8e739b59f26dc5d.mp4',
+    'https://cdn.shopify.com/videos/c/o/v/fb5e24f633864c8683af782bfecf7ea6.mov',
+    'https://cdn.shopify.com/videos/c/o/v/c027d04bf88b4ec78b668ee1a23945d8.mp4'
+  ];
+
+  const reviews = [
+    {
+      nameUser: 'Amazonuser1',
+      avatarUser:
+        'https://m.media-amazon.com/images/S/amazon-avatars-global/ba8b8ae4-c4fe-42d2-b2ca-525f48dbd0fc._CR0%2C0%2C375%2C375_UX460_.jpg',
+      rate: 5,
+      titleReview: 'Love that they are pre-sharpened',
+      contentReview:
+        'The Amazon Basics Wood-Cased #2 Pencils are a fantastic option for anyone looking for high-quality pencils at an affordable price. With 150 pre-sharpened pencils in the box, this set offers incredible value.',
+      interestedPerson: 4,
+      time: 'March 8, 2025',
+      imgsContent: [
+        'https://i.pinimg.com/474x/2b/57/3b/2b573b0120ae4d07eed78a4e775a1237.jpg',
+        'https://i.pinimg.com/736x/b3/ef/8b/b3ef8b3d81228e3bc17d1651fd6764bc.jpg',
+        'https://i.pinimg.com/474x/0f/cf/27/0fcf27856ae9074dad583e9c66007e05.jpg'
+      ],
+      locationReview: 'Reviewed in the United States'
+    },
+    {
+      nameUser: 'JaneDoe22',
+      avatarUser:
+        'https://m.media-amazon.com/images/S/amazon-avatars-global/71e0d078-6c02-4d1a-9d14-989994d01c4c._CR64%2C0%2C371%2C371_SX460_.jpg',
+      rate: 4,
+      titleReview: 'Great pencils but packaging could be better',
+      contentReview:
+        'These pencils write smoothly and are easy to sharpen, but my box arrived slightly damaged. Otherwise, very happy with the purchase!',
+      interestedPerson: 7,
+      time: 'February 20, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in Canada'
+    },
+    {
+      nameUser: 'MarkT',
+      avatarUser: '',
+      rate: 5,
+      titleReview: 'Perfect for my classroom',
+      contentReview:
+        'I bought these for my students, and they love them. The pre-sharpened feature saves me so much time!',
+      interestedPerson: 10,
+      time: 'January 15, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in the United States'
+    },
+    {
+      nameUser: 'HappyBuyer99',
+      avatarUser: '',
+      rate: 3,
+      titleReview: 'Decent but break easily',
+      contentReview:
+        "The pencils are okay for casual use, but I've had a few break while sharpening. Not the best quality, but still usable.",
+      interestedPerson: 3,
+      time: 'April 5, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in Australia'
+    },
+    {
+      nameUser: 'SarahL',
+      avatarUser: '',
+      rate: 5,
+      titleReview: 'Amazing value for the price',
+      contentReview:
+        "I can't believe how many pencils I got for this price. The quality is just as good as the more expensive brands!",
+      interestedPerson: 6,
+      time: 'March 30, 2025',
+      imgsContent: [
+        'https://i.pinimg.com/736x/f9/4a/b1/f94ab18700bc81ad0e688c6986d23e0b.jpg',
+        'https://i.pinimg.com/736x/21/a9/05/21a905ed06d05b660dceb0db601b2bad.jpg'
+      ],
+      locationReview: 'Reviewed in the United Kingdom'
+    },
+    {
+      nameUser: 'ChrisW',
+      avatarUser: '',
+      rate: 4,
+      titleReview: 'Good but not perfect',
+      contentReview:
+        'These are solid pencils, but the erasers are a bit too hard for my liking. Otherwise, a good buy.',
+      interestedPerson: 2,
+      time: 'May 1, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in Germany'
+    },
+    {
+      nameUser: 'EmilyK',
+      avatarUser: '',
+      rate: 5,
+      titleReview: 'Exactly what I needed',
+      contentReview:
+        'These pencils are great for sketching and writing. The pre-sharpened feature is super convenient!',
+      interestedPerson: 8,
+      time: 'June 12, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in France'
+    },
+    {
+      nameUser: 'TomG',
+      avatarUser: '',
+      rate: 2,
+      titleReview: 'Not what I expected',
+      contentReview:
+        "I found the wood too soft and the lead breaks too easily. Won't be buying again.",
+      interestedPerson: 5,
+      time: 'July 21, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in the Netherlands'
+    },
+    {
+      nameUser: 'SophiaM',
+      avatarUser: '',
+      rate: 5,
+      titleReview: 'Great for kids',
+      contentReview:
+        'Bought these for my kids, and they work wonderfully. The yellow design makes them easy to find!',
+      interestedPerson: 9,
+      time: 'August 10, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in Spain'
+    },
+    {
+      nameUser: 'DanielB',
+      avatarUser: '',
+      rate: 4,
+      titleReview: 'Solid pencils, worth the price',
+      contentReview:
+        "Overall, I'm happy with these pencils. They last long, and the graphite is smooth. Eraser could be better.",
+      interestedPerson: 3,
+      time: 'September 5, 2025',
+      imgsContent: [],
+      locationReview: 'Reviewed in Italy'
+    }
+  ];
+
+  import Swiper from 'swiper';
+  import { Navigation, Pagination } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+
+  interface ISlide {
+    url_video: string;
+    [key: string]: any; 
+  }
+
+  let swiperContainer: HTMLElement;
+  let swiperInstance: Swiper | null;
+  let navigationPrevRef: HTMLButtonElement;
+  let navigationNextRef: HTMLButtonElement;
+
+  onMount(() => {
+    if (swiperContainer) {
+      swiperInstance = new Swiper(swiperContainer, {
+        modules: [Navigation, Pagination],
+        slidesPerView: 'auto',
+        spaceBetween: 8,
+        grabCursor: true,
+        navigation: {
+          prevEl: navigationPrevRef,
+          nextEl: navigationNextRef
+        },
+        breakpoints: {
+          // Khi màn hình >= 768px (md)
+          768: {
+            spaceBetween: 12
+          }
+        }
+      });
+    }
+  });
+
+  onDestroy(() => {
+    if (swiperInstance) {
+      swiperInstance.destroy();
+      swiperInstance = null;
+    }
+  });
 </script>
 
 <div>
   <div class="bg-[#ebe6e2]">
     <div class="container-page flex flex-col items-center justify-center gap-2 py-14 md:gap-4">
       <img
-      class="max-w-[300px]"
-      src="https://cdn.shopify.com/s/files/1/0818/3060/9177/files/0a7c39e06aca460d8994d199a18d0595.png?v=1712147018"
-      alt=""
+        class="max-w-[300px]"
+        src="https://cdn.shopify.com/s/files/1/0818/3060/9177/files/0a7c39e06aca460d8994d199a18d0595.png?v=1712147018"
+        alt=""
       />
       <h1 class="text-title text-center text-xl font-bold md:text-3xl">
         Arrive Relaxed & Refreshed.
@@ -99,15 +274,15 @@
       <p class="text-title font-semibold">Improve your travels today!</p>
     </div>
     <div class="grid grid-cols-2 items-center gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
-        {#await data.data}
-          <h1>Đang tải</h1>
-        {:then resolvedData}
-          {#each resolvedData.data as product }
-          <ProductItem {product}/>
-          {/each}
-        {:catch error}
-          <p>Lỗi khi tải sản phẩm: {error.message || 'Không xác định'}</p>
-        {/await}
+      {#await data.data}
+        <h1>Đang tải</h1>
+      {:then resolvedData}
+        {#each resolvedData.data as product}
+          <ProductItem {product} />
+        {/each}
+      {:catch error}
+        <p>Lỗi khi tải sản phẩm: {error.message || 'Không xác định'}</p>
+      {/await}
     </div>
   </div>
   <div class="container-page flex flex-col items-start gap-4 py-8 md:gap-8 md:py-12 lg:flex-row">
@@ -182,30 +357,28 @@
       </p>
     </div>
     <div class="container-page relative pb-12">
-      <div class="scrollbar-hide flex w-full gap-2 overflow-x-auto whitespace-nowrap md:gap-3">
-        <!-- {#await data.slides}
-          <p>Đang tải đánh giá...</p>
-        {:then slides}
-          {#each data.slides as slide}
-            <div
-              class="max-h-[500px] max-w-[49%] flex-shrink-0 overflow-hidden rounded-2xl md:max-w-[24%]"
-            >
-              <SlideVideo url_video={slide.url_video} />
-            </div>
-          {/each}
-        {:catch error}
-          {#if data.error}
-            <p>Lỗi khi tải đánh giá: {data.error}</p>
-          {/if}
-        {/await} -->
+      <div class="swiper" bind:this={swiperContainer}>
+        <div class="swiper-wrapper">
+            {#each videoUrls as slide}
+              <div
+                class="swiper-slide max-h-[500px] max-w-[49%] flex-shrink-0 overflow-hidden rounded-2xl md:max-w-[24%]"
+              >
+                <SlideVideo url_video={slide} />
+              </div>
+            {/each}
+        </div>
       </div>
+
       <button
-        class="duration-400 absolute left-0 top-[50%] flex size-[25px] translate-y-[-100%] items-center justify-center rounded-full bg-[#00000066] transition-all hover:bg-black md:size-[40px]"
+        bind:this={navigationPrevRef}
+        class="duration-400 absolute left-0 top-[50%] z-10 flex size-[25px] translate-y-[-100%] items-center justify-center rounded-full bg-[#00000066] transition-all hover:bg-black md:size-[40px]"
       >
         <ChevronLeftIcon color="#fff" strokeWidth={1} />
       </button>
+
       <button
-        class="duration-400 absolute right-0 top-[50%] flex size-[25px] translate-y-[-100%] items-center justify-center rounded-full bg-[#00000066] transition-all hover:bg-black md:size-[40px]"
+        bind:this={navigationNextRef}
+        class="duration-400 absolute right-0 top-[50%] z-10 flex size-[25px] translate-y-[-100%] items-center justify-center rounded-full bg-[#00000066] transition-all hover:bg-black md:size-[40px]"
       >
         <ChevronRightIcon color="#fff" strokeWidth={1} />
       </button>
@@ -288,7 +461,7 @@
         class="reviews:flex-col flex w-full flex-row flex-wrap items-start justify-between border-b border-[#d5d9d9]"
       >
         <div class="mb-5 w-max">
-          <h1 class="text-primary text-lg footer:text-2xl font-semibold">Customer reviews</h1>
+          <h1 class="text-primary footer:text-2xl text-lg font-semibold">Customer reviews</h1>
           <div class="flex flex-col gap-2">
             <div class="flex items-center gap-3">
               <ul class="flex items-center">
@@ -364,63 +537,63 @@
       </div>
     </div>
     <div class="footer:w-max w-full flex-1">
-      <div class="footer:px-4 footer:mb-4  border-b border-[#d5d9d9] footer:pb-4">
+      <div class="footer:px-4 footer:mb-4 footer:pb-4 border-b border-[#d5d9d9]">
         <h1 class="text-primary header:py-0 py-3 font-bold md:text-lg">
           Top reviews from the United States
         </h1>
       </div>
       <div class="flex flex-col">
-        <!-- {#await data.reviews}
-          <p>Đang tải đánh giá...</p>
-        {:then reviews}
-          {#each data.reviews as review}
-          <div class="flex flex-col footer:pt-0 py-5 footer:pl-12 ">
+        {#each reviews as review}
+          <div class="footer:pt-0 footer:pl-12 flex flex-col py-5">
             <div class="flex items-center gap-3">
-              <img class="max-w-[30px] rounded-full" src={review.avatarUser.length <= 0 ? "https://m.media-amazon.com/images/S/amazon-avatars-global/default.png" : review.avatarUser}  alt="">
+              <img
+                class="max-w-[30px] rounded-full"
+                src={review.avatarUser.length <= 0
+                  ? 'https://m.media-amazon.com/images/S/amazon-avatars-global/default.png'
+                  : review.avatarUser}
+                alt=""
+              />
               <h2 class="text-sm font-medium">{review.nameUser}</h2>
             </div>
             <div class="flex flex-col items-start">
-            <div class="flex gap-2 items-center">
-              <div class="flex items-center">
-                <StarIcon color="#ffa61e" class="fill-[#ffa61e] max-w-[15px]" />
-                <StarIcon color="#ffa61e" class="fill-[#ffa61e] max-w-[15px]" />
-                <StarIcon color="#ffa61e" class="fill-[#ffa61e] max-w-[15px]" />
-                <StarIcon color="#ffa61e" class="fill-[#ffa61e] max-w-[15px]" />
-                <StarIcon color="#ffa61e" class="fill-[#ffa61e] max-w-[15px]" />
+              <div class="flex items-center gap-2">
+                <div class="flex items-center">
+                  <StarIcon color="#ffa61e" class="max-w-[15px] fill-[#ffa61e]" />
+                  <StarIcon color="#ffa61e" class="max-w-[15px] fill-[#ffa61e]" />
+                  <StarIcon color="#ffa61e" class="max-w-[15px] fill-[#ffa61e]" />
+                  <StarIcon color="#ffa61e" class="max-w-[15px] fill-[#ffa61e]" />
+                  <StarIcon color="#ffa61e" class="max-w-[15px] fill-[#ffa61e]" />
+                </div>
+                <h1 class="text-primary line-clamp-1 text-sm font-semibold">
+                  {review.titleReview}
+                </h1>
               </div>
-              <h1 class="text-sm font-semibold text-primary line-clamp-1">{review.titleReview}</h1>
-            </div>  
-              <span class="text-[#566169] text-sm mb-2">Reviewed in the {review.locationReview} on {review.time}</span>
-              <div class="flex flex-col gap-3 mb-5">
-                <p class="text-sm text-[#0f1137] font-medium">{review.contentReview}</p>
+              <span class="mb-2 text-sm text-[#566169]"
+                >Reviewed in the {review.locationReview} on {review.time}</span
+              >
+              <div class="mb-5 flex flex-col gap-3">
+                <p class="text-sm font-medium text-[#0f1137]">{review.contentReview}</p>
               </div>
-              <div class="flex gap-2 mb-3">
-                 {#each review.imgsContent as img }
-                    <img class="max-w-[100px] rounded-lg" src={img} alt="">
-                 {/each}
+              <div class="mb-3 flex gap-2">
+                {#each review.imgsContent as img}
+                  <img class="max-w-[100px] rounded-lg" src={img} alt="" />
+                {/each}
               </div>
-              <div class="text-[15px] text-[#565959] mb-2">
+              <div class="mb-2 text-[15px] text-[#565959]">
                 {review.interestedPerson} people found this helpful
               </div>
-              <div class="text-[#565959] flex items-center gap-4">
-                <button class="px-4 py-1 border border-[#888c8c] rounded-3xl cursor-pointer text-sm text-black font-medium">Helpful</button>
-                <div class="w-[0.3px] h-4 bg-[#56595932]"></div>
-                <div class="cursor-pointer hover:underline">
-                  Report
-                </div>
+              <div class="flex items-center gap-4 text-[#565959]">
+                <button
+                  class="cursor-pointer rounded-3xl border border-[#888c8c] px-4 py-1 text-sm font-medium text-black"
+                  >Helpful</button
+                >
+                <div class="h-4 w-[0.3px] bg-[#56595932]"></div>
+                <div class="cursor-pointer hover:underline">Report</div>
               </div>
             </div>
-            <div class="border-b border-[#d5d9d9] max-w-[80%] mt-7">
-
-            </div>
+            <div class="mt-7 max-w-[80%] border-b border-[#d5d9d9]"></div>
           </div>
-          {/each}
-        {:catch error}
-          {#if data.error}
-            <p>Lỗi khi tải đánh giá: {data.error}</p>
-          {/if}
-        {/await} -->
-        
+        {/each}
       </div>
     </div>
   </div>

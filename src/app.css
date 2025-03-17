@@ -324,7 +324,7 @@ button {
 }
 
 .list-star i {
-	color: var(--primary-bg-color);
+	color: #7069bc;
 }
 
 .rate span {
@@ -448,25 +448,7 @@ button {
 	transition: border 0.2s ease-in-out;
 	margin-bottom: 10px !important;
 }
-/* 
-.product-option input:checked + .radio-btn ~ * {
-border-color: #0000;
-}
 
-.product-option input {
-position: absolute;
-opacity: 0;
-}
-
-.radio-btn {
-min-width: 18px;
-height: 18px;
-border: 2px solid #7159c1;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-} */
 .product-option input:checked + .radio-btn::before {
 	content: '';
 	width: 10px;
